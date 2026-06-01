@@ -1,13 +1,71 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model categorias {
+  id_categoria Int          @id @default(autoincrement())
+  nome         String       @db.VarChar(100)
+  tipo         fluxo?
+  user_id      Int?
+  users        users?       @relation(fields: [user_id], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  transacoes   transacoes[]
+}
+
+model contas {
+  id_conta    Int          @id @default(autoincrement())
+  instituicao String       @db.VarChar(100)
+  tipo        tipo_conta?
+  user_id     Int?
+  users       users?       @relation(fields: [user_id], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  transacoes  transacoes[]
+}
+
+model transacoes {
+  id_transacao    Int             @id @default(autoincrement())
+  tipo            fluxo
+  valor           Decimal         @db.Decimal
+  descricao       String?         @db.VarChar(255)
+  ativo           Boolean?        @default(true)
+  forma_pagamento forma_pagamento
+  data_transacao  DateTime        @db.Date
+  criada_em       DateTime?       @default(now()) @db.Timestamp(6)
+  categoria_id    Int?
+  conta_id        Int?
+  categorias      categorias?     @relation(fields: [categoria_id], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_categoria")
+  contas          contas?         @relation(fields: [conta_id], references: [id_conta], onDelete: NoAction, onUpdate: NoAction, map: "fk_conta")
+}
+
+model users {
+  id_user    Int          @id @default(autoincrement())
+  nome       String       @db.VarChar(100)
+  email      String       @db.VarChar(100)
+  senha      String       @db.VarChar(100)
+  criada_em  DateTime?    @default(now()) @db.Timestamp(6)
+  categorias categorias[]
+  contas     contas[]
+}
+
+enum fluxo {
+  entrada
+  saida
+}
+
+enum forma_pagamento {
+  pix
+  debito
+  credito
+  dinheiro
+  boleto
+}
+
+enum tipo_conta {
+  banco
+  dinheiro
+  cartao_credito
+  cartao_digital
 }
