@@ -1,4 +1,4 @@
-import { prisma } from "../config/db.js";
+import { prisma } from "../../../config/db.js";
 
 export async function getUsers() {
   const users = await prisma.users.findMany();
@@ -13,13 +13,13 @@ export async function getUserById(id_user: number) {
 }
 
 type user = {
-    nome: string
-    email: string
-    senha: string
-}
+  nome: string;
+  email: string;
+  senha: string;
+};
 
 export function createUser(newUser: user) {
-    return prisma.users.create({
-        data: newUser
-    })
+  return prisma.users.create({
+    data: newUser,
+  });
 }
