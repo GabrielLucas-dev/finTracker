@@ -10,10 +10,10 @@ export class CreateUser{
         this.usersRepository = usersRepository
     }
 
-    async execute(data: users){
+    async create(data: users){
         if(!data) throw new AppError("Dado(s) para a criação do usuário faltando", 400)    
         const doubleEmail = await this.usersRepository.getUserEmail(data.email)
-        if(doubleEmail && doubleEmail > 0) throw new AppError("Email já existente no banco de dados")
+        if(doubleEmail) throw new AppError("Email já cadastrado no banco de dados", 409)
 
         const hashSenha = await bcrypt.hash(data.senha, 6)
         data.senha = hashSenha

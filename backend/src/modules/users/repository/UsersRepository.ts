@@ -29,11 +29,13 @@ export class UsersRepository{
     const deleteUser = await prisma.users.delete({
       where: { id_user: id }
     })
+    return deleteUser
   }
 
   async getUserEmail(email: string): Promise<any> {
     const userEmail = await prisma.users.findFirst({
       where: { email: email  }
     })
+    return userEmail
   }
 }

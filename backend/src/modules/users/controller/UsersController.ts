@@ -30,7 +30,7 @@ export class UserController{
 
     const usersRepository = new UsersRepository()
     const createUserService = new CreateUser(usersRepository);
-    const result = await createUserService.execute(data)
+    const result = await createUserService.create(data)
 
     return res.status(201).json(result)
   }
