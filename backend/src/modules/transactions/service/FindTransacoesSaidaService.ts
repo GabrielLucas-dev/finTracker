@@ -1,0 +1,14 @@
+import type { TransacoesRepository } from "../repository/transacoesRepository.js";
+
+export class FindTransacoesSaida{
+    private transacoesRepositrory: TransacoesRepository
+
+    constructor(transacoesRepositrory: TransacoesRepository){
+        this.transacoesRepositrory = transacoesRepositrory
+    }
+
+    async execute() {
+        const result = await this.transacoesRepositrory.findTransacoesSaida()
+        return result
+    }
+}
