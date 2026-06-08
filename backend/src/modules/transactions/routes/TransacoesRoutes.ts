@@ -11,5 +11,6 @@ router.get('/entradas', transacoesController.findTransacoesEntrada)
 router.get('/saidas', transacoesController.findTransacoesSaida)
 router.get('/:id_transacao', transacoesController.findTransacaoById)
 router.delete('/:id_transacao', transacoesController.deleteTransacao)
+router.put('/:id_transacao', transacoesController.updateTransacao)
 
 export default router

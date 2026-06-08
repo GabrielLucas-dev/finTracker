@@ -47,11 +47,26 @@ export class TransacoesRepository{
     })
     return transacoesEntrada
   }
-  
+
   async findTransacoesSaida() {
     const transacoesSaida = await prisma.transacoes.findMany({
       where: { tipo: "saida" }
     })
     return transacoesSaida
+  }
+
+  async updateTransacao(id: number, transacao: transacoes){
+    const updateTransacao = await prisma.transacoes.update({
+      where: { id_transacao: id },
+      data: {
+        tipo: transacao.tipo,
+        valor: transacao.valor,
+        descricao: transacao.descricao,
+        ativo: transacao.ativo,
+        forma_pagamento: transacao.forma_pagamento,
+        data_transacao: new Date(transacao.data_transacao),
+      }
+    })
+    return updateTransacao
   }
 }

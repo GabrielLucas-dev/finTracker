@@ -1,14 +1,14 @@
-import type { TransacoesRepository } from "../repository/transacoesRepository.js";
+import type { TransacoesRepository } from "../repository/TransacoesRepository.js";
 
-export class FindTransacoesSaida{
-    private transacoesRepositrory: TransacoesRepository
+export class FindTransacoesSaida {
+  private transacoesRepository: TransacoesRepository;
 
-    constructor(transacoesRepositrory: TransacoesRepository){
-        this.transacoesRepositrory = transacoesRepositrory
-    }
+  constructor(transacoesRepository: TransacoesRepository) {
+    this.transacoesRepository = transacoesRepository;
+  }
 
-    async execute() {
-        const result = await this.transacoesRepositrory.findTransacoesSaida()
-        return result
-    }
+  async execute() {
+    const result = await this.transacoesRepository.findTransacoesSaida();
+    return result;
+  }
 }
